@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\ReviewController;
+use App\Models\Recipe;
 
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\UserController;
@@ -12,11 +13,13 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
+    $recipes = Recipe::take(3)->get(); // Limit to 3 recipes or adjust as needed
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'recipes' => $recipes, // Pass recipes to the view
     ]);
 });
 
